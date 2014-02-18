@@ -48,8 +48,6 @@ def _create_member_request(context, data_dict):
         member = model.Member(table_name="user", table_id=userobj.id, group_id=group.id, capacity=role, state='pending')
         changed = True
 
-    assert member.group.is_organization()
-
     if member.state != 'pending' or changed:
         member.state = 'pending'
         member.capacity = role
@@ -98,7 +96,8 @@ def member_request_show(context, data_dict):
     fetch_user = data_dict.get("fetch_user", False)
     member = model.Session.query(model.Member).get(member_id)
 
-    assert member.group.is_organization()
+    if not member.group.is_organization:
+        raise NotFound
 
     data = model_dictize.member_dictize(member, context)
 
@@ -121,13 +120,16 @@ def member_request_list(context, data_dict):
     user_object = model.User.get(user)
     sysadmin = new_authz.is_sysadmin(user)
 
-    admin_in_groups = model.Session.query(model.Member).filter(model.Member.state == "active").filter(model.Member.table_name == "user") \
-        .filter(model.Member.capacity == 'admin').filter(model.Member.table_id == user_object.id).values(model.Member.group_id)
-
-    query = model.Session.query(model.Member).filter(model.Member.table_name == "user")
+    query = model.Session.query(model.Member).filter(model.Member.table_name == "user").filter(model.Member.state == 'pending')
 
     if not sysadmin:
-        query = query.filter(model.Member.group_id.in_(admin_in_groups))
+        admin_in_groups = model.Session.query(model.Member).filter(model.Member.state == "active").filter(model.Member.table_name == "user") \
+            .filter(model.Member.capacity == 'admin').filter(model.Member.table_id == user_object.id)
+
+        if admin_in_groups.count() <= 0:
+            return []
+
+        query = query.filter(model.Member.group_id.in_(admin_in_groups.values(model.Member.group_id)))
 
     group = data_dict.get('group', None)
     if group:
@@ -135,7 +137,7 @@ def member_request_list(context, data_dict):
         if group_object:
             query = query.filter(model.Member.group_id == group_object.id)
 
-    members = query.filter(model.Member.state == 'pending').all()
+    members = query.all()
 
     return _member_list_dictize(members, context)
 
@@ -157,10 +159,8 @@ def member_request_process(context, data_dict):
     state = "active" if approve else "deleted"
 
     member = model.Session.query(model.Member).get(member_id)
-    if not member:
+    if not member or not member.group.is_organization:
         raise NotFound
-
-    assert member.group.is_organization()
 
     member.state = state
     revision = model.repo.new_revision()

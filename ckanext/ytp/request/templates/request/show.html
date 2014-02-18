@@ -26,7 +26,7 @@
               </tr>
           </tbody>
       </table>
-      {% if h.check_access('member_request_process', {'id': member.id})%}
+      {% if h.check_access('member_request_process', {'member': member.id})%}
       <div class="form-actions">
         {% set locale = h.dump_json({'content': _('Are you sure you want reject this request?')}) %}
         <a href="{{ h.url_for('member_request_reject', member_id=member.id) }}" class="btn btn-danger pull-left" data-module="confirm-action" data-module-i18n="{{ locale }}">{{ _('Reject') }}</a>

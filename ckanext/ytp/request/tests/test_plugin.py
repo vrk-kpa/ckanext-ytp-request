@@ -40,14 +40,16 @@ class TestYtpRequestPlugin(TestCase):
 
     def test_member_request_create(self):
         context = self._create_context()
-
-        self.assert_raises(NotFound, toolkit.get_action("member_request_create"), context, {"group": "test_organization"})
-        toolkit.get_action("organization_create")(context, {"name": "test_organization"})
-        self.assert_len(toolkit.get_action("member_request_list")(context, {"group": "test_organization"}), 0)
+        admin_context = self._create_context()
         self._create_user("tester")
         context['user'] = "tester"
-        toolkit.get_action("member_request_create")(context, {"group": "test_organization"})
-        self.assert_len(toolkit.get_action("member_request_list")(context, {"group": "test_organization"}), 1)
+
+        self.assert_raises(NotFound, toolkit.get_action("member_request_create"), context, {"group": "test_organization", 'role': "editor"})
+        toolkit.get_action("organization_create")(admin_context, {"name": "test_organization"})
+        self.assert_len(toolkit.get_action("member_request_list")(admin_context, {"group": "test_organization"}), 0)
+
+        toolkit.get_action("member_request_create")(context, {"group": "test_organization", 'role': "editor"})
+        self.assert_len(toolkit.get_action("member_request_list")(admin_context, {"group": "test_organization"}), 1)
 
     def test_member_request_process(self):
         context_user = self._create_context()

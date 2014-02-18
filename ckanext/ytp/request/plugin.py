@@ -43,7 +43,6 @@ class YtpRequestPlugin(plugins.SingletonPlugin):
 
     def _list_organizations(self):
         context = {'user': c.user}
-
         data_dict = {}
         data_dict['all_fields'] = True
         data_dict['groups'] = []
