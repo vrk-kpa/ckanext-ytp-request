@@ -1,0 +1,40 @@
+{% extends "request/page.html" %}
+
+{% block subtitle %}{{ _('Organization Member Request') }}{% endblock %}
+
+{% block primary_content %}
+  <section class="module">
+    <div class="module-content">
+      <h1>{% trans %}Organization Member Request{% endtrans %}</h1>
+      <table class="table table-striped table-bordered table-condensed">
+          <tbody>
+              <tr>
+                  <th>{% trans %}Organization{% endtrans %}</th>
+                  <td><a href="{{ h.url('organization_read', id=member.group.name) }}">{{ member.group.title }} ({{ member.group.name }})</a></td>
+              </tr>
+              <tr>
+                  <th>{% trans %}User{% endtrans %}</th>
+                  <td><a href="{{ h.url_for('user_datasets', controller='user', id=member_user.name) }}">{{ member_user.fullname }} ({{ member_user.name }})</a></td>
+              </tr>
+              <tr>
+                  <th>{% trans %}State{% endtrans %}</th>
+                  <td>{{ member.state }}</td>
+              </tr>
+              <tr>
+                  <th>{% trans %}Role{% endtrans %}</th>
+                  <td><b>{{ member.capacity }}</b></td>
+              </tr>
+          </tbody>
+      </table>
+      {% if h.check_access('member_request_process', {'id': member.id})%}
+      <div class="form-actions">
+        {% set locale = h.dump_json({'content': _('Are you sure you want reject this request?')}) %}
+        <a href="{{ h.url_for('member_request_reject', member_id=member.id) }}" class="btn btn-danger pull-left" data-module="confirm-action" data-module-i18n="{{ locale }}">{{ _('Reject') }}</a>
+
+        {% set locale = h.dump_json({'content': _('Are you sure you want approve this request?')}) %}
+        <a href="{{ h.url_for('member_request_approve', member_id=member.id) }}" class="btn btn-primary" data-module="confirm-action" data-module-i18n="{{ locale }}">{{ _('Approve') }}</a>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

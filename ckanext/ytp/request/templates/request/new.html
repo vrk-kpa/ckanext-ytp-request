@@ -1,0 +1,35 @@
+{% extends "request/page.html" %}
+
+{% block breadcrumb_content %}
+  {#
+    <li>{{ h.nav_named_link(_('Harvest Sources'), '{0}_search'.format(c.dataset_type)) }}</li>
+    <li class="active">{{ h.nav_named_link(_('Create Harvest Source'), '{0}_new'.format(c.dataset_type)) }}</li>
+  #}
+{% endblock %}
+
+{% block actions_content %}
+{% endblock %}
+
+{% block subtitle %}{{ _('New Organization Member Request') }}{% endblock %}
+
+{% block primary_content %}
+  <section class="module">
+    <div class="module-content">
+      <h1>{% trans %}New Organization Member Request{% endtrans %}</h1>
+      {% block form %}{{ c.form | safe }}{% endblock %}
+    </div>
+  </section>
+{% endblock %}
+
+{% block secondary_content %}
+  <section class="module module-narrow">
+    <h2 class="module-heading"><i class="icon-large icon-info-sign"></i> {{ _('Member requests') }}</h2>
+    <div class="module-content">
+      <p>
+        {% trans %}
+        You can request to be member of organization.
+        {% endtrans %}
+      </p>
+    </div>
+  </section>
+{% endblock %}
