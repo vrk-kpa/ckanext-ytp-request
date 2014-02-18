@@ -6,17 +6,16 @@
   {% endblock %}
 
   {% block basic_fields %}
-    {% set existing_org = data.organization %}
+
     {% set organizations = h.list_organizations() %}
-    {{ data.organization }}
     <div class="control-group">
       <label for="field-organizations" class="control-label">{{ _('Organization') }}</label>
       <div class="controls">
         <select id="field-organizations" name="organization" data-module="autocomplete">
-          <option value="" {% if not selected_org and data.id %} selected="selected" {% endif %}>{{ _('Select an organization...') }}</option>
+          <option value="" {% if not (data.organization or selected_organization) %} selected="selected" {% endif %}>{{ _('Select an organization...') }}</option>
           {% for organization in organizations %}
-            {% set selected_org = (existing_org and existing_org == organization.id) or (not existing_org and not data.id and organization.id == organizations[0].id) %}
-            <option value="{{ organization.id }}" {% if selected_org %} selected="selected" {% endif %}>{{ organization.name }}</option>
+            {% set select = (selected_organization and selected_organization == organization.name) or (data.organization and data.organization == organization.id) %}
+            <option value="{{ organization.id }}" {% if select %} selected="selected" {% endif %}>{{ organization.name }}</option>
           {% endfor %}
         </select>
       </div>

@@ -1,12 +1,14 @@
 ckanext-ytp-request
-==================
+===================
 
-CKAN extension that provides organization member requests and means to control those. 
+CKAN extension that provides organization member requests and means to control those.
 
 Features
 --------
 
-- Not ready for production
+- Not ready for production!
+- Users can request to be part of organization
+- Organization admins and global admins can approve or reject request
 
 Install
 -------
@@ -18,4 +20,4 @@ Installed as CKAN extension: ytp_request
 Configuration
 -------------
 
-No configuration currently.
+No configuration. See Install.

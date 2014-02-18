@@ -23,7 +23,9 @@ class YtpRequestController(base.BaseController):
             return self._save_new(context)
 
         data = data or {}
-        extra_vars = {'data': data, 'errors': errors or {}, 'error_summary': error_summary or {}, 'action': 'new'}
+
+        extra_vars = {'data': data, 'errors': errors or {}, 'error_summary': error_summary or {}, 'action': 'new',
+                      'selected_organization': request.params.get('selected_organization', None)}
 
         c.roles = toolkit.get_action('member_roles_list')(context, {})
         c.user_role = 'member'
