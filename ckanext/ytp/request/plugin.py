@@ -7,6 +7,7 @@ from ckan.plugins import toolkit
 from ckan.common import c
 
 from ckanext.ytp.request import auth, logic
+from ckan.lib import helpers
 
 log = logging.getLogger(__name__)
 
@@ -49,5 +50,9 @@ class YtpRequestPlugin(plugins.SingletonPlugin):
         data_dict['type'] = 'organization'
         return toolkit.get_action('organization_list')(context, data_dict)
 
+    def _apply_to_organization_link(self, organization_name):
+
+        return helpers.url_for('member_request_new', selected_organization=organization_name) if c.user else None
+
     def get_helpers(self):
-        return {'list_organizations': self._list_organizations}
+        return {'list_organizations': self._list_organizations, 'apply_to_organization_link': self._apply_to_organization_link}
