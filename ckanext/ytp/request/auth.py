@@ -2,22 +2,29 @@ from ckan import new_authz, model
 from ckan.common import _
 
 
-def member_request_create(context, data_dict):
+def _only_registered_user():
     if not new_authz.auth_is_registered_user():
         return {'success': False, 'msg': _('User is not logged in')}
     return {'success': True}
 
 
+def member_request_create(context, data_dict):
+    """ Create request access check """
+    return _only_registered_user()
+
+
 def member_request_show(context, data_dict):
-    return {'success': True}
+    """ Show request access check """
+    return _only_registered_user()
 
 
 def member_request_list(context, data_dict):
-    return {'success': True}
+    """ List request access check """
+    return _only_registered_user()
 
 
 def member_request_process(context, data_dict):
-    """ Approve or reject """
+    """ Approve or reject access check """
 
     if new_authz.is_sysadmin(context['user']):
         return {'success': True}
