@@ -20,7 +20,12 @@ setup(
     install_requires=[
         # -*- Extra requirements: -*-
     ],
-    message_extractors={'ckanext/ytp/request': [('**.py', 'python', None)]},
+    message_extractors={
+        'ckanext/ytp/request': [
+            ('**.py', 'python', None),
+            ('templates/**.html', 'ckan', None)
+        ]
+    },
     include_package_data=True,
     entry_points="""
         [ckan.plugins]

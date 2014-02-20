@@ -1,0 +1,161 @@
+# Finnish translations for ckanext-ytp-request.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the ckanext-ytp-request
+# project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ckanext-ytp-request 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-02-20 17:38+0200\n"
+"PO-Revision-Date: 2014-02-20 17:09+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: fi <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: ckanext/ytp/request/auth.py:8 ckanext/ytp/request/auth.py:15
+msgid "User is not logged in"
+msgstr "Käyttäjä ei ole kirjautunut"
+
+#: ckanext/ytp/request/auth.py:26
+msgid "User has already request or active membership"
+msgstr "Käyttäjällä on jo hakemus tai aktiivinen jäsenyys"
+
+#: ckanext/ytp/request/controller.py:13
+msgid "Unauthorized"
+msgstr "Ei oikeuksia"
+
+#: ckanext/ytp/request/controller.py:48
+msgid "Item not found"
+msgstr "Kohdetta ei löytynyt"
+
+#: ckanext/ytp/request/controller.py:50
+msgid "Integrity Error"
+msgstr ""
+
+#: ckanext/ytp/request/controller.py:70 ckanext/ytp/request/controller.py:76
+#: ckanext/ytp/request/controller.py:90
+msgid "Request not found"
+msgstr "Hakemusta ei löytynyt"
+
+#: ckanext/ytp/request/logic.py:33
+#: ckanext/ytp/request/templates/request/new_request_form.html:23
+#: ckanext/ytp/request/templates/request/show.html:37
+msgid "Role"
+msgstr ""
+
+#: ckanext/ytp/request/logic.py:33
+msgid "As sysadmin you already have access to all organizations"
+msgstr "Pääkäyttäjänä sinulla on jo oikeudet kaikkiin organisaatioihin"
+
+#: ckanext/ytp/request/logic.py:42
+msgid "You already have pending request to the organization"
+msgstr "Sinulla on jo odottava hakemus organisaatioon"
+
+#: ckanext/ytp/request/logic.py:44
+msgid "You are already part of the organization"
+msgstr "Sinä olet jo organisaation jäsen"
+
+#: ckanext/ytp/request/logic.py:46
+msgid "Duplicate organization request"
+msgstr "Hakemus on jo olemassa"
+
+#: ckanext/ytp/request/logic.py:46
+#: ckanext/ytp/request/templates/request/list.html:27
+#: ckanext/ytp/request/templates/request/new_request_form.html:11
+#: ckanext/ytp/request/templates/request/show.html:25
+msgid "Organization"
+msgstr ""
+
+#: ckanext/ytp/request/templates/organization/read.html:9
+msgid "Request membership"
+msgstr "Ilmoittaudu organisaatioon"
+
+#: ckanext/ytp/request/templates/request/list.html:3
+#: ckanext/ytp/request/templates/request/list.html:7
+#: ckanext/ytp/request/templates/request/list.html:21
+msgid "Organization membership requests"
+msgstr "Organisaation jäsenhakemukset"
+
+#: ckanext/ytp/request/templates/request/list.html:10
+msgid ""
+"All organization member requests listed here. Organization admin can "
+"approve or reject requests. To process request select edit."
+msgstr ""
+"Kaikki organisaation jäsenhakemukset ovat listattu tässä. Organisaation "
+"pääkäyttäjä voi hyväksyä tai hylätä hakemuksia. Käsitelläksesi hakemus "
+"valitse muokkaa."
+
+#: ckanext/ytp/request/templates/request/list.html:28
+#: ckanext/ytp/request/templates/request/show.html:29
+msgid "User"
+msgstr ""
+
+#: ckanext/ytp/request/templates/request/list.html:38
+msgid "Edit"
+msgstr ""
+
+#: ckanext/ytp/request/templates/request/list.html:44
+msgid "No requests found."
+msgstr "Hakemusta ei löytynyt"
+
+#: ckanext/ytp/request/templates/request/new.html:6
+msgid "New membership request"
+msgstr "Uusi jäsenhakemus"
+
+#: ckanext/ytp/request/templates/request/new.html:11
+#: ckanext/ytp/request/templates/request/new.html:19
+msgid "Request organization membership"
+msgstr "Hae organisaation jäsenyyttä"
+
+#: ckanext/ytp/request/templates/request/new.html:22
+msgid "You can request to be member of organization."
+msgstr "Sinä voit ilmouttautua jäseneksi organisaatioon."
+
+#: ckanext/ytp/request/templates/request/new_request_form.html:14
+msgid "Select an organization..."
+msgstr ""
+
+#: ckanext/ytp/request/templates/request/new_request_form.html:27
+msgid "Send request"
+msgstr "Lähetä hakemus"
+
+#: ckanext/ytp/request/templates/request/show.html:3
+#: ckanext/ytp/request/templates/request/show.html:7
+#: ckanext/ytp/request/templates/request/show.html:21
+msgid "Organization membership request"
+msgstr "Organisaation jäsenhakemus"
+
+#: ckanext/ytp/request/templates/request/show.html:10
+msgid ""
+"This shows the organization membership request. If you are organization "
+"admin you can approve or reject request."
+msgstr ""
+"Organisaation jäsenhakemukset listattuna. Organisaation pääkäyttäjänä "
+"voit hyväksyä tai hylätä hakemuksia."
+
+#: ckanext/ytp/request/templates/request/show.html:33
+msgid "State"
+msgstr ""
+
+#: ckanext/ytp/request/templates/request/show.html:44
+msgid "Are you sure you want reject this request?"
+msgstr "Oletko varma, että haluat hylätä tämä hakemuksen?"
+
+#: ckanext/ytp/request/templates/request/show.html:45
+msgid "Reject"
+msgstr "Hylkää"
+
+#: ckanext/ytp/request/templates/request/show.html:47
+msgid "Are you sure you want approve this request?"
+msgstr "Oletko varma, että haluat hyväksyä tämän hakemuksen?"
+
+#: ckanext/ytp/request/templates/request/show.html:48
+msgid "Approve"
+msgstr "Hyväksy"
+

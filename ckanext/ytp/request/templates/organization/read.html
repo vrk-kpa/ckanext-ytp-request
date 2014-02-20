@@ -6,7 +6,7 @@
     {% if h.check_access('member_request_create', {'organization_id': c.group_dict.id}) %}
         <a class="btn btn-primary" href="{{ h.url_for('member_request_new', selected_organization=c.group_dict.name) }}">
             <i class="icon-circle-arrow-right"></i>
-            {% trans %}Apply to organization{% endtrans %}
+            {% trans %}Request membership{% endtrans %}
         </a>
     {% endif %}
 {% endblock %}

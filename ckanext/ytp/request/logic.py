@@ -1,8 +1,7 @@
-from ckanext.ytp.request import auth
 from ckan import model, new_authz
 from sqlalchemy.sql.expression import or_
 from ckan.lib.dictization import model_dictize
-from ckan.logic import NotFound, ValidationError
+from ckan.logic import NotFound, ValidationError, check_access
 from ckan.common import _
 
 
@@ -60,9 +59,9 @@ def _create_member_request(context, data_dict):
         if 'message' in context:
             revision.message = context['message']
         elif changed:
-            revision.message = _(u'Create new member request %s %s') % (user, data_dict['group'])
+            revision.message = u'New member request'
         else:
-            revision.message = _(u'Changed member request (%s %s) state to pending') % (user, data_dict['group'])
+            revision.message = u'Changed member request'
 
         if changed:
             model.Session.add(member)
@@ -80,7 +79,7 @@ def member_request_create(context, data_dict):
     :param group: name of the group or organization
     :type group: string
     '''
-    auth.member_request_create(context, data_dict)
+    check_access('member_request_create', context, data_dict)
     member, _changed = _create_member_request(context, data_dict)
     return model_dictize.member_dictize(member, context)
 
@@ -94,7 +93,8 @@ def member_request_show(context, data_dict):
     :param fetch_user: fetch related user data
     :type fetch_user: boolean
     '''
-    auth.member_request_show(context, data_dict)
+    check_access('member_request_show', context, data_dict)
+
     model = context['model']
     member_id = data_dict.get("member")
     fetch_user = data_dict.get("fetch_user", False)
@@ -118,7 +118,7 @@ def member_request_list(context, data_dict):
     :param group: name of the group (optional)
     :type group: string
     '''
-    auth.member_request_list(context, data_dict)
+    check_access('member_request_list', context, data_dict)
 
     user = context['user']
     user_object = model.User.get(user)
@@ -155,7 +155,7 @@ def member_request_process(context, data_dict):
     :param approve: approve or reject request
     :type accpet: boolean
     '''
-    auth.member_request_process(context, data_dict)
+    check_access('member_request_process', context, data_dict)
     member_id = data_dict.get("member")
     approve = data_dict.get('approve')
     user = context["user"]
@@ -173,7 +173,7 @@ def member_request_process(context, data_dict):
     if 'message' in context:
         revision.message = context['message']
     else:
-        revision.message = _(u'Changed member request (%s %s) state to %s') % (user, member_id, state)
+        revision.message = 'Processed member request'
 
     member.save()
     model.repo.commit()

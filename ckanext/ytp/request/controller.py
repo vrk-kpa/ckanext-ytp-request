@@ -9,6 +9,9 @@ import ckan.lib.navl.dictization_functions as dict_fns
 
 
 class YtpRequestController(base.BaseController):
+
+    not_auth_message = _('Unauthorized')
+
     def new(self, data=None, errors=None, error_summary=None):
         context = {'model': model, 'session': model.Session,
                    'user': c.user or c.author,
@@ -17,7 +20,7 @@ class YtpRequestController(base.BaseController):
         try:
             check_access('member_request_create', context)
         except NotAuthorized:
-            abort(401, _('Unauthorized to create a member request'))
+            abort(401, self.not_auth_message)
 
         if context['save'] and not data:
             return self._save_new(context)
@@ -40,9 +43,9 @@ class YtpRequestController(base.BaseController):
             member = toolkit.get_action('member_request_create')(context, data_dict)
             helpers.redirect_to('member_request_show', member_id=member['id'])
         except NotAuthorized:
-            abort(401, _('Unauthorized to read group %s') % '')
+            abort(401, self.not_auth_message)
         except NotFound:
-            abort(404, _('Group not found'))
+            abort(404, _('Item not found'))
         except dict_fns.DataError:
             abort(400, _(u'Integrity Error'))
         except ValidationError, e:
@@ -82,7 +85,7 @@ class YtpRequestController(base.BaseController):
             toolkit.get_action('member_request_process')(context, data_dict)
             helpers.redirect_to('member_request_list')
         except NotAuthorized:
-            abort(401, _('Unauthorized to process group %s') % '')
+            abort(401, self.not_auth_message)
         except NotFound:
             abort(404, _('Request not found'))
 
