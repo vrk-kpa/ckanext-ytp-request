@@ -2,13 +2,12 @@
 
 import logging
 
-from ckan import plugins, model, new_authz
+from ckan import plugins, model
 from ckan.plugins import toolkit
 from ckan.common import c, _
 
 from ckanext.ytp.request import auth, logic
 from ckan.lib import helpers
-from ckan.logic import check_access
 from sqlalchemy.sql.expression import or_
 
 log = logging.getLogger(__name__)
