@@ -2,12 +2,14 @@
 
 import logging
 
-from ckan import plugins
+from ckan import plugins, model, new_authz
 from ckan.plugins import toolkit
-from ckan.common import c
+from ckan.common import c, _
 
 from ckanext.ytp.request import auth, logic
 from ckan.lib import helpers
+from ckan.logic import check_access
+from sqlalchemy.sql.expression import or_
 
 log = logging.getLogger(__name__)
 
@@ -18,6 +20,12 @@ class YtpRequestPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IAuthFunctions)
     plugins.implements(plugins.ITemplateHelpers)
+
+    def _add_to_translation(self):
+        """ Include dynamic values to translation search. Never called. """
+        _("admin")
+        _("member")
+        _("editor")
 
     def before_map(self, m):
         """ CKAN autocomplete discards vocabulary_id from request. Create own api for this. """
@@ -50,9 +58,26 @@ class YtpRequestPlugin(plugins.SingletonPlugin):
         data_dict['type'] = 'organization'
         return toolkit.get_action('organization_list')(context, data_dict)
 
-    def _apply_to_organization_link(self, organization_name):
+    def _organization_role(self, organization_id):
+        if not c.userobj:
+            return None
+        if c.userobj.sysadmin:
+            return _("admin")
 
+        query = model.Session.query(model.Member).filter(or_(model.Member.state == 'active', model.Member.state == 'pending')) \
+            .filter(model.Member.table_name == 'user').filter(model.Member.group_id == organization_id).filter(model.Member.table_id == c.userobj.id)
+
+        member = query.first()
+        if not member:
+            return None
+
+        if member.state == 'pending':
+            return _('Pending for approval')
+        else:
+            return _(member.capacity)
+
+    def _apply_link(self, organization_name):
         return helpers.url_for('member_request_new', selected_organization=organization_name) if c.user else None
 
     def get_helpers(self):
-        return {'list_organizations': self._list_organizations, 'apply_to_organization_link': self._apply_to_organization_link}
+        return {'list_organizations': self._list_organizations, 'organization_role': self._organization_role, 'apply_link': self._apply_link}

@@ -11,13 +11,15 @@ def _only_registered_user():
 
 def member_request_create(context, data_dict):
     """ Create request access check """
+
     if not new_authz.auth_is_registered_user():
         return {'success': False, 'msg': _('User is not logged in')}
+    username = context['user']
 
     organization_id = None if not data_dict else data_dict.get('organization_id', None)
 
     if organization_id:
-        user = model.User.get(context['user'])
+        user = model.User.get(username)
 
         query = model.Session.query(model.Member).filter(or_(model.Member.state == 'active', model.Member.state == 'pending')) \
             .filter(model.Member.table_name == 'user').filter(model.Member.table_id == user.id).filter(model.Member.group_id == organization_id)
