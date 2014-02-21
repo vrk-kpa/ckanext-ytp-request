@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-ytp-request 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-02-20 17:38+0200\n"
+"POT-Creation-Date: 2014-02-21 16:51+0200\n"
 "PO-Revision-Date: 2014-02-20 17:09+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fi <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: ckanext/ytp/request/auth.py:8 ckanext/ytp/request/auth.py:15
+#: ckanext/ytp/request/auth.py:8 ckanext/ytp/request/auth.py:16
 msgid "User is not logged in"
 msgstr "Käyttäjä ei ole kirjautunut"
 
-#: ckanext/ytp/request/auth.py:26
+#: ckanext/ytp/request/auth.py:28
 msgid "User has already request or active membership"
 msgstr "Käyttäjällä on jo hakemus tai aktiivinen jäsenyys"
 
@@ -43,34 +43,50 @@ msgstr ""
 msgid "Request not found"
 msgstr "Hakemusta ei löytynyt"
 
-#: ckanext/ytp/request/logic.py:33
+#: ckanext/ytp/request/logic.py:32
 #: ckanext/ytp/request/templates/request/new_request_form.html:23
-#: ckanext/ytp/request/templates/request/show.html:37
+#: ckanext/ytp/request/templates/request/show.html:45
 msgid "Role"
 msgstr ""
 
-#: ckanext/ytp/request/logic.py:33
+#: ckanext/ytp/request/logic.py:32
 msgid "As sysadmin you already have access to all organizations"
 msgstr "Pääkäyttäjänä sinulla on jo oikeudet kaikkiin organisaatioihin"
 
-#: ckanext/ytp/request/logic.py:42
+#: ckanext/ytp/request/logic.py:41
 msgid "You already have pending request to the organization"
 msgstr "Sinulla on jo odottava hakemus organisaatioon"
 
-#: ckanext/ytp/request/logic.py:44
+#: ckanext/ytp/request/logic.py:43
 msgid "You are already part of the organization"
 msgstr "Sinä olet jo organisaation jäsen"
 
-#: ckanext/ytp/request/logic.py:46
+#: ckanext/ytp/request/logic.py:45
 msgid "Duplicate organization request"
 msgstr "Hakemus on jo olemassa"
 
-#: ckanext/ytp/request/logic.py:46
+#: ckanext/ytp/request/logic.py:45
 #: ckanext/ytp/request/templates/request/list.html:27
 #: ckanext/ytp/request/templates/request/new_request_form.html:11
 #: ckanext/ytp/request/templates/request/show.html:25
 msgid "Organization"
 msgstr ""
+
+#: ckanext/ytp/request/plugin.py:25 ckanext/ytp/request/plugin.py:64
+msgid "admin"
+msgstr "Pääkäyttäjä"
+
+#: ckanext/ytp/request/plugin.py:26
+msgid "member"
+msgstr "Jäsen"
+
+#: ckanext/ytp/request/plugin.py:27
+msgid "editor"
+msgstr "Toimittaja"
+
+#: ckanext/ytp/request/plugin.py:74
+msgid "Pending for approval"
+msgstr "Odottaa hyväksymistä"
 
 #: ckanext/ytp/request/templates/organization/read.html:9
 msgid "Request membership"
@@ -139,23 +155,23 @@ msgstr ""
 "Organisaation jäsenhakemukset listattuna. Organisaation pääkäyttäjänä "
 "voit hyväksyä tai hylätä hakemuksia."
 
-#: ckanext/ytp/request/templates/request/show.html:33
+#: ckanext/ytp/request/templates/request/show.html:41
 msgid "State"
 msgstr ""
 
-#: ckanext/ytp/request/templates/request/show.html:44
+#: ckanext/ytp/request/templates/request/show.html:52
 msgid "Are you sure you want reject this request?"
 msgstr "Oletko varma, että haluat hylätä tämä hakemuksen?"
 
-#: ckanext/ytp/request/templates/request/show.html:45
+#: ckanext/ytp/request/templates/request/show.html:53
 msgid "Reject"
 msgstr "Hylkää"
 
-#: ckanext/ytp/request/templates/request/show.html:47
+#: ckanext/ytp/request/templates/request/show.html:55
 msgid "Are you sure you want approve this request?"
 msgstr "Oletko varma, että haluat hyväksyä tämän hakemuksen?"
 
-#: ckanext/ytp/request/templates/request/show.html:48
+#: ckanext/ytp/request/templates/request/show.html:56
 msgid "Approve"
 msgstr "Hyväksy"
 
