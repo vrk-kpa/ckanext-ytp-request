@@ -2,13 +2,13 @@
 
 import logging
 
-from ckan import plugins, model
+from ckan import plugins
 from ckan.plugins import toolkit
 from ckan.common import c, _
 
 from ckanext.ytp.request import auth, logic
 from ckan.lib import helpers
-from sqlalchemy.sql.expression import or_
+from ckanext.ytp.request.tools import get_user_member
 
 log = logging.getLogger(__name__)
 
@@ -34,6 +34,9 @@ class YtpRequestPlugin(plugins.SingletonPlugin):
         m.connect("member_request_show", '/member-request/show/{member_id}', action='show', controller=controller)
         m.connect("member_request_reject", '/member-request/reject/{member_id}', action='reject', controller=controller)
         m.connect("member_request_approve", '/member-request/approve/{member_id}', action='approve', controller=controller)
+        m.connect("member_request_cancel", '/member-request/cancel/{member_id}', action='cancel', controller=controller)
+        m.connect("member_request_show_organization", '/member-request/show-organization/{organization_id}', action='show_organization', controller=controller)
+        m.connect("member_request_membership_cancel", '/member-request/membership-cancel/{organization_id}', action='membership_cancel', controller=controller)
         return m
 
     def update_config(self, config):
@@ -57,26 +60,22 @@ class YtpRequestPlugin(plugins.SingletonPlugin):
         data_dict['type'] = 'organization'
         return toolkit.get_action('organization_list')(context, data_dict)
 
-    def _organization_role(self, organization_id):
-        if not c.userobj:
-            return None
+    def _request_title_and_link(self, organization_id, organization_name):
+        if not c.user or not c.userobj:
+            return None, None
+
         if c.userobj.sysadmin:
-            return _("admin")
+            return _("admin"), None
 
-        query = model.Session.query(model.Member).filter(or_(model.Member.state == 'active', model.Member.state == 'pending')) \
-            .filter(model.Member.table_name == 'user').filter(model.Member.group_id == organization_id).filter(model.Member.table_id == c.userobj.id)
+        member = get_user_member(organization_id)
 
-        member = query.first()
         if not member:
-            return None
+            return _('Request membership'), helpers.url_for('member_request_new', selected_organization=organization_name)
 
         if member.state == 'pending':
-            return _('Pending for approval')
-        else:
-            return _(member.capacity)
+            return _('Pending for approval'), helpers.url_for('member_request_show', member_id=member.id)
 
-    def _apply_link(self, organization_name):
-        return helpers.url_for('member_request_new', selected_organization=organization_name) if c.user else None
+        return _(member.capacity), None
 
     def get_helpers(self):
-        return {'list_organizations': self._list_organizations, 'organization_role': self._organization_role, 'apply_link': self._apply_link}
+        return {'list_organizations': self._list_organizations, 'request_title_and_link': self._request_title_and_link}

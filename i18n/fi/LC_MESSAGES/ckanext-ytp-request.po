@@ -5,12 +5,13 @@
 # 
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
+# ilja.dev, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ytp\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-04 11:26+0200\n"
-"PO-Revision-Date: 2014-03-04 09:43+0000\n"
+"POT-Creation-Date: 2014-03-05 15:41+0200\n"
+"PO-Revision-Date: 2014-03-05 13:43+0000\n"
 "Last-Translator: ilja.dev\n"
 "Language-Team: Finnish (http://www.transifex.com/projects/p/ytp/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -24,24 +25,25 @@ msgstr ""
 msgid "User is not logged in"
 msgstr "Käyttäjä ei ole kirjautunut"
 
-#: ckanext/ytp/request/auth.py:28
+#: ckanext/ytp/request/auth.py:23
 msgid "User has already request or active membership"
 msgstr "Käyttäjällä on jo hakemus tai aktiivinen jäsenyys"
 
-#: ckanext/ytp/request/controller.py:13
+#: ckanext/ytp/request/controller.py:14
 msgid "Unauthorized"
 msgstr "Ei oikeuksia"
 
-#: ckanext/ytp/request/controller.py:48
+#: ckanext/ytp/request/controller.py:49
 msgid "Item not found"
 msgstr "Kohdetta ei löytynyt"
 
-#: ckanext/ytp/request/controller.py:50
+#: ckanext/ytp/request/controller.py:51
 msgid "Integrity Error"
 msgstr ""
 
-#: ckanext/ytp/request/controller.py:70 ckanext/ytp/request/controller.py:76
-#: ckanext/ytp/request/controller.py:90
+#: ckanext/ytp/request/controller.py:71 ckanext/ytp/request/controller.py:77
+#: ckanext/ytp/request/controller.py:92 ckanext/ytp/request/controller.py:109
+#: ckanext/ytp/request/controller.py:120 ckanext/ytp/request/controller.py:131
 msgid "Request not found"
 msgstr "Hakemusta ei löytynyt"
 
@@ -74,7 +76,7 @@ msgstr "Hakemus on jo olemassa"
 msgid "Organization"
 msgstr ""
 
-#: ckanext/ytp/request/plugin.py:25 ckanext/ytp/request/plugin.py:64
+#: ckanext/ytp/request/plugin.py:25 ckanext/ytp/request/plugin.py:68
 msgid "admin"
 msgstr "Pääkäyttäjä"
 
@@ -86,13 +88,27 @@ msgstr "Jäsen"
 msgid "editor"
 msgstr "Toimittaja"
 
-#: ckanext/ytp/request/plugin.py:74
-msgid "Pending for approval"
-msgstr "Odottaa hyväksymistä"
-
+#: ckanext/ytp/request/plugin.py:73
 #: ckanext/ytp/request/templates/organization/read.html:9
 msgid "Request membership"
 msgstr "Ilmoittaudu organisaatioon"
+
+#: ckanext/ytp/request/plugin.py:76
+msgid "Pending for approval"
+msgstr "Odottaa hyväksymistä"
+
+#: ckanext/ytp/request/templates/organization/read.html:12
+msgid "Are you sure you want cancel membership?"
+msgstr "Oletko varma, että haluat peruuttaa jäsenyyden?"
+
+#: ckanext/ytp/request/templates/organization/read.html:15
+msgid "Cancel membership"
+msgstr "Peruuta jäsenyys"
+
+#: ckanext/ytp/request/templates/organization/read.html:20
+#: ckanext/ytp/request/templates/request/show.html:61
+msgid "Cancel request"
+msgstr "Peruuta hakemus"
 
 #: ckanext/ytp/request/templates/request/list.html:3
 #: ckanext/ytp/request/templates/request/list.html:7
@@ -171,3 +187,7 @@ msgstr "Oletko varma, että haluat hyväksyä tämän hakemuksen?"
 #: ckanext/ytp/request/templates/request/show.html:56
 msgid "Approve"
 msgstr "Hyväksy"
+
+#: ckanext/ytp/request/templates/request/show.html:60
+msgid "Are you sure you want cancel this request?"
+msgstr "Oletko varma, että haluat peruuttaa tämän ilmoittautumisen?"

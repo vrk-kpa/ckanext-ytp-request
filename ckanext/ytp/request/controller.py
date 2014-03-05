@@ -6,6 +6,7 @@ from ckan.plugins import toolkit
 from ckan.lib.base import c, request, render, abort
 from ckan.common import _
 import ckan.lib.navl.dictization_functions as dict_fns
+from ckanext.ytp.request.tools import get_user_member
 
 
 class YtpRequestController(base.BaseController):
@@ -81,6 +82,7 @@ class YtpRequestController(base.BaseController):
         context = {'model': model, 'session': model.Session,
                    'user': c.user or c.author}
         data_dict = {"member": member_id, "approve": approve}
+
         try:
             toolkit.get_action('member_request_process')(context, data_dict)
             helpers.redirect_to('member_request_list')
@@ -94,3 +96,36 @@ class YtpRequestController(base.BaseController):
 
     def approve(self, member_id):
         return self._process(member_id, True)
+
+    def show_organization(self, organization_id):
+        try:
+            member = get_user_member(organization_id)
+            if not member:
+                raise NotFound
+            helpers.redirect_to('member_request_show', member_id=member.id)
+        except NotAuthorized:
+            abort(401, self.not_auth_message)
+        except NotFound:
+            abort(404, _('Request not found'))
+
+    def cancel(self, member_id):
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user or c.author}
+        try:
+            toolkit.get_action('member_request_cancel')(context, {"member": member_id})
+            helpers.redirect_to('organizations_index')
+        except NotAuthorized:
+            abort(401, self.not_auth_message)
+        except NotFound:
+            abort(404, _('Request not found'))
+
+    def membership_cancel(self, organization_id):
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user or c.author}
+        try:
+            toolkit.get_action('member_request_membership_cancel')(context, {"organization_id": organization_id})
+            helpers.redirect_to('organizations_index')
+        except NotAuthorized:
+            abort(401, self.not_auth_message)
+        except NotFound:
+            abort(404, _('Request not found'))

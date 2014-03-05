@@ -47,15 +47,20 @@
               </tr>
           </tbody>
       </table>
-      {% if h.check_access('member_request_process', {'member': member.id})%}
       <div class="form-actions">
+      {% if h.check_access('member_request_process', {'member': member.id})%}
         {% set locale = h.dump_json({'content': _('Are you sure you want reject this request?')}) %}
         <a href="{{ h.url_for('member_request_reject', member_id=member.id) }}" class="btn btn-danger pull-left" data-module="confirm-action" data-module-i18n="{{ locale }}">{{ _('Reject') }}</a>
 
         {% set locale = h.dump_json({'content': _('Are you sure you want approve this request?')}) %}
         <a href="{{ h.url_for('member_request_approve', member_id=member.id) }}" class="btn btn-primary" data-module="confirm-action" data-module-i18n="{{ locale }}">{{ _('Approve') }}</a>
-      </div>
       {% endif %}
+
+      {% if member_user.id == c.userobj.id and h.check_access('member_request_cancel', {'member': member.id}) %}
+        {% set locale = h.dump_json({'content': _('Are you sure you want cancel this request?')}) %}
+        <a href="{{ h.url_for('member_request_cancel', member_id=member.id) }}" class="btn btn-primary" data-module="confirm-action" data-module-i18n="{{ locale }}">{{ _('Cancel request') }}</a>
+      {% endif %}
+      </div>
     </div>
   </section>
 {% endblock %}

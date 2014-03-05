@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-ytp-request 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-04 11:26+0200\n"
+"POT-Creation-Date: 2014-03-05 15:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,24 +22,25 @@ msgstr ""
 msgid "User is not logged in"
 msgstr ""
 
-#: ckanext/ytp/request/auth.py:28
+#: ckanext/ytp/request/auth.py:23
 msgid "User has already request or active membership"
 msgstr ""
 
-#: ckanext/ytp/request/controller.py:13
+#: ckanext/ytp/request/controller.py:14
 msgid "Unauthorized"
 msgstr ""
 
-#: ckanext/ytp/request/controller.py:48
+#: ckanext/ytp/request/controller.py:49
 msgid "Item not found"
 msgstr ""
 
-#: ckanext/ytp/request/controller.py:50
+#: ckanext/ytp/request/controller.py:51
 msgid "Integrity Error"
 msgstr ""
 
-#: ckanext/ytp/request/controller.py:70 ckanext/ytp/request/controller.py:76
-#: ckanext/ytp/request/controller.py:90
+#: ckanext/ytp/request/controller.py:71 ckanext/ytp/request/controller.py:77
+#: ckanext/ytp/request/controller.py:92 ckanext/ytp/request/controller.py:109
+#: ckanext/ytp/request/controller.py:120 ckanext/ytp/request/controller.py:131
 msgid "Request not found"
 msgstr ""
 
@@ -72,7 +73,7 @@ msgstr ""
 msgid "Organization"
 msgstr ""
 
-#: ckanext/ytp/request/plugin.py:25 ckanext/ytp/request/plugin.py:64
+#: ckanext/ytp/request/plugin.py:25 ckanext/ytp/request/plugin.py:68
 msgid "admin"
 msgstr ""
 
@@ -84,12 +85,26 @@ msgstr ""
 msgid "editor"
 msgstr ""
 
-#: ckanext/ytp/request/plugin.py:74
+#: ckanext/ytp/request/plugin.py:73
+#: ckanext/ytp/request/templates/organization/read.html:9
+msgid "Request membership"
+msgstr ""
+
+#: ckanext/ytp/request/plugin.py:76
 msgid "Pending for approval"
 msgstr ""
 
-#: ckanext/ytp/request/templates/organization/read.html:9
-msgid "Request membership"
+#: ckanext/ytp/request/templates/organization/read.html:12
+msgid "Are you sure you want cancel membership?"
+msgstr ""
+
+#: ckanext/ytp/request/templates/organization/read.html:15
+msgid "Cancel membership"
+msgstr ""
+
+#: ckanext/ytp/request/templates/organization/read.html:20
+#: ckanext/ytp/request/templates/request/show.html:61
+msgid "Cancel request"
 msgstr ""
 
 #: ckanext/ytp/request/templates/request/list.html:3
@@ -168,5 +183,9 @@ msgstr ""
 
 #: ckanext/ytp/request/templates/request/show.html:56
 msgid "Approve"
+msgstr ""
+
+#: ckanext/ytp/request/templates/request/show.html:60
+msgid "Are you sure you want cancel this request?"
 msgstr ""
 

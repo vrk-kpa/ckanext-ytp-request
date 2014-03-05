@@ -2,7 +2,7 @@ from ckan import model, new_authz
 from sqlalchemy.sql.expression import or_
 from ckan.lib.dictization import model_dictize
 from ckan.logic import NotFound, ValidationError, check_access
-from ckan.common import _
+from ckan.common import _, c
 
 
 def _member_list_dictize(obj_list, context, sort_key=lambda x: x['group_id'], reverse=False):
@@ -146,23 +146,13 @@ def member_request_list(context, data_dict):
     return _member_list_dictize(members, context)
 
 
-def member_request_process(context, data_dict):
-    ''' Approve or reject member request.
-
-    :param member: id of the member
-    :type member: string
-
-    :param approve: approve or reject request
-    :type accpet: boolean
-    '''
-    check_access('member_request_process', context, data_dict)
-    member_id = data_dict.get("member")
-    approve = data_dict.get('approve')
+def _process_request(context, member, action):
     user = context["user"]
+
+    approve = action == 'approve'  # else 'reject' or 'cancel'
 
     state = "active" if approve else "deleted"
 
-    member = model.Session.query(model.Member).get(member_id)
     if not member or not member.group.is_organization:
         raise NotFound
 
@@ -178,3 +168,58 @@ def member_request_process(context, data_dict):
     member.save()
     model.repo.commit()
     return model_dictize.member_dictize(member, context)
+
+
+def member_request_membership_cancel(context, data_dict):
+    check_access('member_request_membership_cancel', context, data_dict)
+
+    organization_id = data_dict.get("organization_id")
+    query = model.Session.query(model.Member).filter(model.Member.state == 'active') \
+        .filter(model.Member.table_name == 'user').filter(model.Member.table_id == c.userobj.id).filter(model.Member.group_id == organization_id)
+    member = query.first()
+
+    if not member:
+        raise NotFound
+
+    return _process_request(context, member, 'cancel')
+
+
+def member_request_cancel(context, data_dict):
+    ''' Cancel own request. Member or organization_id must be provided.
+
+    :param member: id of the member
+    :type member: string
+
+    :param organization_id: id of the organization
+    :type member: string
+    '''
+    check_access('member_request_cancel', context, data_dict)
+
+    member_id = data_dict.get("member", None)
+    member = None
+    if member_id:
+        member = model.Session.query(model.Member).get(data_dict.get("member"))
+    else:
+        organization_id = data_dict.get("organization_id")
+        query = model.Session.query(model.Member).filter(or_(model.Member.state == 'pending', model.Member.state == 'active')) \
+            .filter(model.Member.table_name == 'user').filter(model.Member.table_id == c.userobj.id).filter(model.Member.group_id == organization_id)
+        member = query.first()
+
+    if not member:
+        raise NotFound
+
+    return _process_request(context, member, 'cancel')
+
+
+def member_request_process(context, data_dict):
+    ''' Approve or reject member request.
+
+    :param member: id of the member
+    :type member: string
+
+    :param approve: approve or reject request
+    :type accpet: boolean
+    '''
+    check_access('member_request_process', context, data_dict)
+    member = model.Session.query(model.Member).get(data_dict.get("member"))
+    return _process_request(context, member, 'approve' if data_dict.get('approve') else 'reject')
